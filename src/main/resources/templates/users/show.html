@@ -47,9 +47,9 @@
 <p><strong>ID:</strong> <span th:text="${user.id}">1</span></p>
 <p><strong>Имя:</strong> <span th:text="${user.firstname}">Имя пользователя</span></p>
 <p><strong>Фамилия:</strong> <span th:text="${user.lastname}">Фамилия пользователя</span></p>
-<p><strong>Email:</strong> <span th:text="${user.email}">email@example.com</span></p>
 <p><strong>Дата рождения:</strong> <span th:text="${user.birthDate}">2000-01-01</span></p>
-<p><strong>Возраст:</strong> <span th:text="${user.age}">25</span></p>
+<p><strong>Номер телефона:</strong> <span th:text="${user.phoneNumber}">8800111222</span></p>
+<p><strong>Email:</strong> <span th:text="${user.email}">email@example.com</span></p>
 
 <a th:href="@{/users/{id}/edit(id=${user.getId()})}" class="btn btn-edit">Изменить</a>
 

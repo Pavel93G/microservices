@@ -17,8 +17,9 @@
         <th>ID</th>
         <th>Имя</th>
         <th>Фамилия</th>
-        <th>Возраст</th>
+        <th>Дата рождения</th>
         <th>Email</th>
+        <th>Номер телефона</th>
         <th>Действия</th>
     </tr>
     </thead>
@@ -27,8 +28,9 @@
         <td th:text="${user.id}">1</td>
         <td th:text="${user.firstname}">Имя</td>
         <td th:text="${user.lastname}">Фамилия</td>
-        <td th:text="${user.age}">Возраст</td>
+        <td th:text="${user.birthDate}">Дата рождения</td>
         <td th:text="${user.email}">email</td>
+        <td th:text="${user.phoneNumber}">Номер телефона</td>
         <td>
             <a th:href="@{/users/{id}(id=${user.id})}">Подробнее</a>
         </td>

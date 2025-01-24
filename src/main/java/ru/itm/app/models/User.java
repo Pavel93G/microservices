@@ -18,7 +18,7 @@ public class User {
     @Column(name = "firstname")
     private String firstname;
 
-    @NotEmpty(message = "Поле фамилия не должно быть пустым!")
+    @NotEmpty(message = "Полу фамилия не должно быть пустым!")
     @Size(min = 2, max = 30, message = "Фамилия должно быть от 2 до 30 символов!")
     @Column(name = "lastname")
     private String lastname;
@@ -26,24 +26,25 @@ public class User {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    @Column(name = "age")
-    private Integer age;
-
-    @NotEmpty(message = "Поле email не должно быть пустым!")
-    @Email(message = "Поле email должно быть валидным!")
+    @NotBlank(message = "Полу email не должно быть пустым и содержать пробелы!")
+    @Email(message = "Полу email должно быть валидным!")
     @Column(name = "email", unique = true)
     private String email;
 
-    public User(Long id, String firstname, String lastname, LocalDate birthDate, Integer age, String email) {
-        this.id = id;
+    @NotEmpty(message = "Поле номер телефона не должно быть пустым!")
+    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Некорректный номер телефона.")
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    public User() {
+    }
+
+    public User(String firstname, String lastname, LocalDate birthDate, String email, String phoneNumber) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.birthDate = birthDate;
-        this.age = age;
         this.email = email;
-    }
-
-    public User() {
+        this.phoneNumber = phoneNumber;
     }
 
     public Long getId() {
@@ -58,7 +59,7 @@ public class User {
         return firstname;
     }
 
-    public void setFirstname(String firstname) {
+    public void setFirstname (String firstname) {
         this.firstname = firstname;
     }
 
@@ -78,19 +79,19 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber (String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
