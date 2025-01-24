@@ -1,44 +1,59 @@
-# Системные файлы (macOS, Windows, и т.д.)
-.DS_Store
-Thumbs.db
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
-# Файлы, сгенерированные IDE
-.idea/
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
 *.iml
 *.ipr
-*.iws
 
-# Лог-файлы
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+# IDE и системные файлы
+.idea/
 *.log
-
-# Компилированные файлы
 *.class
 *.jar
 *.war
-*.ear
 
-# Каталоги с зависимостями и сборкой
-target/
-build/
+# Maven
+/target/
 
-# Файлы Maven
-*.pom
-.mvn/wrapper/
+# Logs
+*.log
+logs/
 
-# Файлы для настройки окружений (например, Spring Boot)
-*.env
-*.db
+# OS files
+.DS_Store
+Thumbs.db
 
-# Конфигурационные файлы IDE
-.vscode/
-.settings/
-
-# Файлы конфигурации IntelliJ IDEA
-.idea/
-
-# Платформо-зависимые файлы
-*.swp
-
-# Прочие файлы и каталоги, которые не должны попадать в репозиторий
-*.bak
-*.tmp
+# Spring Boot
+/*.env
+/*.db
+.mvn/
+mvnw
+mvnw.cmd
+.gitattributes

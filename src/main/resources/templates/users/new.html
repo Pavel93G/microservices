@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать нового пользователя</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>Создание нового пользователя</h1>
+<form th:action="@{/users}" th:object="${user}" method="post">
+    <div>
+        <label for="firstname">Имя:</label>
+        <input type="text" id="firstname" name="firstname" th:field="*{firstname}" placeholder="Введите имя" required>
+        <p style="color: #c82333" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></p>
+    </div>
+    <div>
+        <label for="lastname">Фамилия:</label>
+        <input type="text" id="lastname" name="lastname" th:field="*{lastname}" placeholder="Введите фамилию" required>
+        <p style="color: #c82333" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></p>
+    </div>
+    <div>
+        <label for="birthDate">Дата рождения:</label>
+        <input type="date" id="birthDate" name="birthDate" th:field="*{birthDate}">
+        <p style="color: #c82333" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></p>
+    </div>
+    <div>
+        <label for="age">Возраст:</label>
+        <input type="number" id="age" name="age" th:field="*{age}" min="0" placeholder="Введите возраст">
+        <p style="color: #c82333" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></p>
+
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" th:field="*{email}" placeholder="Введите email" required>
+        <p style="color: #c82333" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+    </div>
+    <div>
+        <button type="submit">Создать</button>
+    </div>
+</form>
+<a href="/users">Назад к списку</a>
+</body>
+</html>
