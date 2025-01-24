@@ -13,4 +13,6 @@ public interface UserService {
     void addUser(User user);
     void updateUser(Long id, User updateUser);
     void deleteUser(Long id);
+    String getCurrentUserEmail(User user);
+    String getCurrentUserPhoneNumber(User user);
 }

@@ -39,12 +39,20 @@ public class UserValidator implements Validator {
             errors.rejectValue("lastname", "", "Фамилия должна содержать только буквы!");
         }
 
-        if (userService.findUserByEmail(user.getEmail()).isPresent()) {
-            errors.rejectValue("email", "", "Данный email уже зарегистрирован!");
+        if (user.getEmail() != null) {
+            userService.findUserByEmail(user.getEmail()).ifPresent(existingUser -> {
+                if (!existingUser.getId().equals(user.getId())) {
+                    errors.rejectValue("email", "", "Данный email уже зарегистрирован!");
+                }
+            });
         }
 
-        if (userService.findUserByPhoneNumber(user.getPhoneNumber()).isPresent()) {
-            errors.rejectValue("phoneNumber", "", "Данный номер телефона уже зарегистрирован!");
+        if (user.getPhoneNumber() != null) {
+            userService.findUserByPhoneNumber(user.getPhoneNumber()).ifPresent(existingUser -> {
+                if (!existingUser.getId().equals(user.getId())) {
+                    errors.rejectValue("phoneNumber", "", "Данный номер телефона уже зарегистрирован!");
+                }
+            });
         }
     }
 }

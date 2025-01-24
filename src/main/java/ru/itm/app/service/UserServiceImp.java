@@ -59,4 +59,19 @@ public class UserServiceImp implements UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    @Override
+    public String getCurrentUserPhoneNumber(User user) {
+        var cuerrentUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Пользователь не найден"));
+
+        return cuerrentUser.getPhoneNumber();
+    }
+
+    @Override
+    public String getCurrentUserEmail(User user) {
+        var currentUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Пользователь не найден"));
+        return currentUser.getEmail();
+    }
 }
