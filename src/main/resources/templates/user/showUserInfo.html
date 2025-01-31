@@ -44,21 +44,16 @@
 </head>
 <body>
 <h1>Информация о пользователе</h1>
-<p><strong>ID:</strong> <span th:text="${user.id}">1</span></p>
-<p><strong>Имя:</strong> <span th:text="${user.firstname}">Имя пользователя</span></p>
-<p><strong>Фамилия:</strong> <span th:text="${user.lastname}">Фамилия пользователя</span></p>
+<p><strong>Имя:</strong> <span th:text="${user.firstname}">Имя</span></p>
+<p><strong>Фамилия:</strong> <span th:text="${user.lastname}">Фамилия</span></p>
 <p><strong>Дата рождения:</strong> <span th:text="${user.birthDate}">2000-01-01</span></p>
 <p><strong>Номер телефона:</strong> <span th:text="${user.phoneNumber}">8800111222</span></p>
 <p><strong>Email:</strong> <span th:text="${user.email}">email@example.com</span></p>
+<p><strong>Роли:</strong>
+    <span th:each="role : ${user.roles}" th:text="${role.name}">Роль</span>
+</p>
 
-<a th:href="@{/users/{id}/edit(id=${user.getId()})}" class="btn btn-edit">Изменить</a>
+<a th:href="@{/logout}" class="btn btn-logout">Выйти</a>
 
-<!-- Кнопка для удаления пользователя -->
-<form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
-    <button type="submit" class="btn btn-delete">Удалить</button>
-</form>
-
-<!-- Кнопка возврата к списку пользователей -->
-<a th:href="@{/users}" class="btn btn-back">Вернуться к списку</a>
 </body>
 </html>

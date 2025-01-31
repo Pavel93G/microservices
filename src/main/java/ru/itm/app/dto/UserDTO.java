@@ -1,55 +1,53 @@
-package ru.itm.app.models;
+package ru.itm.app.dto;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
+import ru.itm.app.models.Role;
 
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+public class UserDTO {
     private Long id;
 
-    @Column(name = "username", unique = true)
+    @NotEmpty(message = "Имя пользователя не должно быть пустым")
+    @Size(min = 5, max = 20, message = "Имя пользователя должно быть не меньше 5 знаков и не больше 20!")
     private String username;
 
-    @Column(name = "password")
+    @NotBlank(message = "Поле пароль не должно быть пустым!")
+    @Size(min = 8, max = 255, message = "Пароль должен быть не меньше 8 знаков и не больше 30!")
     private String password;
 
-    @Column(name = "firstname")
+    @NotEmpty(message = "Поле имя не должно быть пустым!")
+    @Size(min = 2, max = 30, message = "Имя должно быть от 2 до 30 символов!")
     private String firstname;
 
-    @Column(name = "lastname")
+    @NotEmpty(message = "Поле фамилия не должно быть пустым!")
+    @Size(min = 2, max = 30, message = "Фамилия должно быть от 2 до 30 символов!")
     private String lastname;
 
-    @Column(name = "birth_date")
+    @Past(message = "Дата рождения должна быть в прошлом")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @NotNull(message = "Дата рождения обязательна")
     private LocalDate birthDate;
 
-    @Column(name = "email", unique = true)
+    @NotBlank(message = "Поле email не должно быть пустым и содержать пробелы!")
+    @Email(message = "Полу email должно быть валидным!")
     private String email;
 
-    @Column(name = "phone_number", unique = true)
+    @NotEmpty(message = "Поле номер телефона не должно быть пустым!")
+    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Некорректный номер телефона.")
     private String phoneNumber;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
     private Set<Role> roles;
 
-
-    public User() {
+    public UserDTO() {
     }
 
-    public User(String username, String password, String firstname, String lastname, LocalDate birthDate, String email,
+    public UserDTO(Long id, String username, String password, String firstname, String lastname, LocalDate birthDate, String email,
                 String phoneNumber, Set<Role> roles) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.firstname = firstname;
@@ -130,21 +128,5 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects
-                .equals(password, user.password) && Objects.equals(firstname, user.firstname) && Objects
-                       .equals(lastname, user.lastname) && Objects.equals(birthDate, user.birthDate) && Objects
-                       .equals(email, user.email) && Objects.equals(phoneNumber, user.phoneNumber);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, password, firstname, lastname, birthDate, email, phoneNumber);
     }
 }

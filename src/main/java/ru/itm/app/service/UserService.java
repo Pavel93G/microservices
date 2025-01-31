@@ -1,18 +1,22 @@
 package ru.itm.app.service;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import ru.itm.app.dto.UserDTO;
 import ru.itm.app.models.User;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface UserService {
-    List<User> findAllUsers();
-    User findUserById(Long id);
-    Optional<User> findUserByEmail(String email);
-    Optional<User> findUserByPhoneNumber(String phoneNumber);
-    void addUser(User user);
-    void updateUser(Long id, User updateUser);
+public interface UserService extends UserDetailsService {
+    List<UserDTO> findAllUsers();
+    UserDTO findUserById(Long id);
+    Optional<UserDTO> findUserByUsername(String username);
+    Optional<UserDTO> findUserByEmail(String email);
+    Optional<UserDTO> findUserByPhoneNumber(String phoneNumber);
+    void addUser(UserDTO userDTO);
+    void updateUser(Long id, UserDTO updateUserDTO);
     void deleteUser(Long id);
-    String getCurrentUserEmail(User user);
-    String getCurrentUserPhoneNumber(User user);
+    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 }

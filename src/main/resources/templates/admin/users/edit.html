@@ -7,8 +7,16 @@
 <body>
 <h1>Изменение пользователя</h1>
 
-<form th:method="PATCH" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}" >
+<form th:method="PATCH" th:action="@{/admin/users/{id}(id=${user.id})}" th:object="${user}" >
     <input type="hidden" th:value="${user.id}" name="id"/>
+
+    <label for="username">Имя:</label>
+    <input type="text" id="username" name="username" th:value="${user.username}" required/><br/>
+    <p style="color: #c82333" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+
+    <label for="password">Пароль:</label>
+    <input type="password" id="password" name="password" th:value="${user.password}" required/><br/>
+    <p style="color: #c82333" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 
     <label for="firstname">Имя:</label>
     <input type="text" id="firstname" name="firstname" th:value="${user.firstname}" required/><br/>
@@ -29,9 +37,23 @@
     <label for="phoneNumber">Номер телефона:</label>
     <input type="tel" id="phoneNumber" name="phoneNumber" th:value="${user.phoneNumber}" /><br/><br/>
     <p style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
-    <button type="submit" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none;">Сохранить изменения</button>
+
+    <label>Роли:</label><br/>
+    <div th:each="role : ${roles}">
+        <input type="checkbox" th:id="'role_' + ${role.id}" th:name="roles" th:value="${role.id}"
+               th:checked="${user.roles.contains(role)}"/>
+        <label th:for="'role_' + ${role.id}" th:text="${role.name}"></label><br/>
+    </div>
+
+    <div>
+        <button type="submit">Сохранить</button>
+    </div>
 </form>
 
-<a th:href="@{/users}" style="display: inline-block; margin-top: 10px;">Вернуться к списку</a>
+<a th:href="@{/admin}" style="display: inline-block; margin-top: 10px;">Вернуться к списку</a>
+
+<form action="/logout" method="post">
+    <button type="submit">Выход</button>
+</form>
 </body>
 </html>
