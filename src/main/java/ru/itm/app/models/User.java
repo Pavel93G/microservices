@@ -36,7 +36,7 @@ public class User {
     @Column(name = "phone_number", unique = true)
     private String phoneNumber;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany()
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
