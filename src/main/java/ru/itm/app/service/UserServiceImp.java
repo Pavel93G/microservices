@@ -34,7 +34,6 @@ public class UserServiceImp implements UserService {
         return UserMapper.toDTOList(userRepository.findAll());
     }
 
-    @Transactional
     @Override
     public UserDTO findUserById(Long id) {
         Optional<User> foundUser = userRepository.findById(id);
@@ -69,7 +68,6 @@ public class UserServiceImp implements UserService {
     public void updateUser(Long id, UserDTO updateUserDTO) {
         var updateUser = UserMapper.toUser(updateUserDTO);
         updateUser.setId(id);
-        updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
         userRepository.save(updateUser);
     }
 
