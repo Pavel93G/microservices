@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: app
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/database_spring&hibernate
+    username: postgres
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+        format_sql: true
+        highlight_sql: true
+        current_session_context_class: thread
+    hibernate:
+      ddl-auto: update
