@@ -16,7 +16,3 @@ spring:
         current_session_context_class: thread
     hibernate:
       ddl-auto: update
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: true
