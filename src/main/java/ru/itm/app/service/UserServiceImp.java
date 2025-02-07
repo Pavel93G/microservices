@@ -1,93 +1,81 @@
 package ru.itm.app.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.itm.app.config.RestTemplateConfig;
 import ru.itm.app.model.User;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class UserServiceImp implements UserService{
     private final RestTemplate restTemplate;
-    private final RestTemplateConfig restTemplateConfig;
     private HttpHeaders headers = new HttpHeaders();
     private String sessionId;
 
+    @Value("${api.url}")
+    private String url;
+
     @Autowired
-    public UserServiceImp(RestTemplate restTemplate, RestTemplateConfig restTemplateConfig) {
+    public UserServiceImp(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.restTemplateConfig = restTemplateConfig;
     }
 
     @Override
     public List<User> findAllUsers() {
-        if (sessionId != null) {
-            headers.set(HttpHeaders.COOKIE, sessionId);
-        }
-        ResponseEntity<List<User>> response = restTemplate.exchange(
-                restTemplateConfig.getApiUrl(),
-                HttpMethod.GET,
-                new HttpEntity<>(headers),
-                new ParameterizedTypeReference<List<User>>() {}
-        );
+        ResponseEntity<User[]> response = restTemplate.getForEntity(url, User[].class);
 
         sessionId = response.getHeaders().getFirst(HttpHeaders.SET_COOKIE);
         System.out.println("Session ID: " + sessionId);
+        headers.set("Cookie", sessionId);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        var userList = Arrays.asList(response.getBody());
+        userList.stream().forEach(System.out::println);
+
+        return userList;
+    }
+
+    @Override
+    public String addUser() {
+        User newUser = new User(3L,"James", "Brown", (byte) 20);
+
+        HttpEntity<User> request = new HttpEntity<>(newUser, headers);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
 
         return response.getBody();
     }
 
     @Override
-    public User addUser() {
-        User user = new User("James", "Brown", (byte) 30);
+    public String updateUser() {
+        User updateUser = new User(3L, "Emma", "Smith", (byte) 21);
 
-        if (sessionId != null) {
-            headers.set(HttpHeaders.COOKIE, sessionId);
-        }
-
-        ResponseEntity<User> response = restTemplate.exchange(
-                restTemplateConfig.getApiUrl(),
-                HttpMethod.POST,
-                new HttpEntity<>(user, headers),
-                User.class
-        );
-        System.out.println("Session ID: " + sessionId);
-
-        return response.getBody();
-    }
-
-    @Override
-    public User updateUser(Long id) {
-        User user = addUser();
-        user.setName("Thomas");
-        user.setLastname("Shelby");
-
-        headers.set(HttpHeaders.COOKIE, sessionId);
-
-        ResponseEntity<User> response = restTemplate.exchange(
-                restTemplateConfig.getApiUrl(),
+        HttpEntity<User> request = new HttpEntity<>(updateUser, headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                url,
                 HttpMethod.PUT,
-                new HttpEntity<>(user, headers),
-                User.class
+                request,
+                String.class
         );
 
         return response.getBody();
     }
 
     @Override
-    public void deletedUser(Long id) {
-        restTemplate.exchange(
-                restTemplateConfig.getApiUrl() + "/" + id,
+    public String deletedUser() {
+        HttpEntity<String> request = new HttpEntity<>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                url + "/3",
                 HttpMethod.DELETE,
-                new HttpEntity<>(headers),
-                Void.class
+                request,
+                String.class
         );
+
+        return response.getBody();
     }
 }

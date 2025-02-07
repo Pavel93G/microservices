@@ -7,15 +7,9 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class RestTemplateConfig {
-    @Value("${api.url}")
-    private String apiUrl;
 
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
-    }
-
-    public String getApiUrl() {
-        return apiUrl;
     }
 }

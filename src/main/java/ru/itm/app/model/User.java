@@ -3,23 +3,17 @@ package ru.itm.app.model;
 public class User {
     private Long id;
     private String name;
-    private String lastname;
-    private Byte age;
-
-    public User(Long id, String name, String lastname, Byte age) {
-        this.id = id;
-        this.name = name;
-        this.lastname = lastname;
-        this.age = age;
-    }
-
-    public User(String name, String lastname, Byte age) {
-        this.name = name;
-        this.lastname = lastname;
-        this.age = age;
-    }
+    private String lastName;
+    private int age;
 
     public User() {
+    }
+
+    public User(Long id, String name, String lastName, int age) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.age = age;
     }
 
     public Long getId() {
@@ -38,19 +32,29 @@ public class User {
         this.name = name;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastname) {
+        this.lastName = lastname;
     }
 
-    public Byte getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Byte age) {
+    public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+               "id=" + id +
+               ", name='" + name + '\'' +
+               ", lastName='" + lastName + '\'' +
+               ", age=" + age +
+               '}';
     }
 }

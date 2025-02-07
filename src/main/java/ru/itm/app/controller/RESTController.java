@@ -19,11 +19,25 @@ public class RESTController {
     }
 
     @GetMapping("/execute")
-    public ResponseEntity<?> execute() {
+    public ResponseEntity<?> findAllUsers() {
+        System.out.println("=== Получаем список пользователей перед операциями ===");
+        var allUsersBefore = userService.findAllUsers();
 
-        var allUsers = userService.findAllUsers();
-//        userService.addUser();
+        System.out.println("=== Добавляем пользователя ===");
+        String addResponse = userService.addUser();
+        System.out.println("Ответ на добавление: " + addResponse);
 
-        return new ResponseEntity<>(allUsers,HttpStatus.OK);
+        System.out.println("=== Обновляем пользователя ===");
+        String updateResponse = userService.updateUser();
+        System.out.println("Ответ на обновление: " + updateResponse);
+
+        System.out.println("=== Удаляем пользователя ===");
+        String deleteResponse = userService.deletedUser();
+        System.out.println("Ответ на удаление: " + deleteResponse);
+
+        System.out.println("=== Получаем список пользователей после всех операций ===");
+        var allUsersAfter = userService.findAllUsers();
+
+        return new ResponseEntity<>(allUsersAfter, HttpStatus.OK);
     }
 }
